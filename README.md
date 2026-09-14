@@ -1,34 +1,44 @@
-# ToxiShield Cyberbullying Detector
+# ToxiShield — Cyberbullying & Toxic Comment Detector
 
-A machine learning project for detecting cyberbullying in text comments using a TensorFlow-based deep learning model.
+A machine learning project for detecting toxic and harmful comments using a TensorFlow-based Bidirectional LSTM model, trained on the [Jigsaw Toxic Comment Classification Challenge](https://www.kaggle.com/datasets/julian3833/jigsaw-toxic-comment-classification-challenge) dataset.
 
 ## Overview
 
-This project analyzes textual comments and classifies them as:
+This project analyzes textual comments and classifies them across six toxicity categories:
 
-- Bullying
-- Not-Bullying
+- **Toxic**
+- **Severe Toxic**
+- **Obscene**
+- **Threat**
+- **Insult**
+- **Identity Hate**
+
+A comment can belong to more than one category at once — this is a multi-label classification problem, not a single-class one.
 
 It includes:
 
 - Dataset loading and exploration
 - Text preprocessing and vectorization
-- LSTM-based deep learning model training
+- Bidirectional LSTM deep learning model training
 - Evaluation and visualization
-- A simple Gradio interface for testing predictions
+- An interactive Gradio interface for single-comment and batch testing
 
 ## Project Files
 
-- `FDS_PROJECT_CYBER_BULLYING_DETECTION.ipynb` — main notebook containing data exploration, model building, and training workflow
-- `train1.csv` — training dataset with text comments and labels
+- `ToxiShield_Toxicity_Detection.ipynb` — main notebook containing data exploration, model building, training, and the Gradio demo *(rename to match your actual notebook filename if different)*
+- `train.csv` — training dataset with comments and their toxicity labels (download from the [Kaggle dataset page](https://www.kaggle.com/datasets/julian3833/jigsaw-toxic-comment-classification-challenge) — not included in this repo due to size)
 
 ## Dataset
 
-The dataset contains comment text and labels, with columns similar to:
+Sourced from the Jigsaw Toxic Comment Classification Challenge, containing Wikipedia talk-page comments labeled by human raters.
 
-- `Text` — the text comment
-- `Label` — classification label (`Bullying` or `Not-Bullying`)
-- `Types` — bullying type/category when applicable
+| Column | Description |
+|---|---|
+| `id` | Unique comment identifier |
+| `comment_text` | The raw comment text |
+| `toxic`, `severe_toxic`, `obscene`, `threat`, `insult`, `identity_hate` | Binary (0/1) labels — a comment may have multiple labels set |
+
+> **Note:** Only `train.csv` is used for training. `test.csv` and `test_labels.csv` are provided by Kaggle for competition scoring and are not required to run this notebook. See the [dataset page](https://www.kaggle.com/datasets/julian3833/jigsaw-toxic-comment-classification-challenge) for the full file list.
 
 ## Requirements
 
@@ -38,7 +48,7 @@ Install the following Python packages before running the notebook:
 pip install pandas numpy matplotlib tensorflow gradio
 ```
 
-Optional but useful for notebook environments:
+Optional, for local notebook environments:
 
 ```bash
 pip install jupyter
@@ -46,19 +56,21 @@ pip install jupyter
 
 ## Setup
 
-1. Open the project folder.
-2. Start Jupyter Notebook or VS Code Notebook support.
-3. Open `CYBER_BULLYING_DETECTION.ipynb`.
-4. Run the cells in order.
+1. Download `train.csv` from the [Kaggle dataset page](https://www.kaggle.com/datasets/julian3833/jigsaw-toxic-comment-classification-challenge) and place it in the project folder (or use `kagglehub` to fetch it directly — see notebook Cell 1).
+2. Open the project folder.
+3. Start Jupyter Notebook, VS Code, or Google Colab.
+4. Open `ToxiShield_Toxicity_Detection.ipynb`.
+5. Run the cells in order.
 
 ## How It Works
 
-1. Load the dataset from `train1.csv`.
-2. Inspect the dataset and text distribution.
-3. Transform text comments using `TextVectorization`.
-4. Train a Bidirectional LSTM model.
-5. Evaluate model accuracy and loss.
-6. Optionally use the Gradio interface to test new comments.
+1. Load the dataset from `train.csv`.
+2. Explore the dataset — class distribution across all six toxicity categories.
+3. Transform comment text using `TextVectorization`.
+4. Train a Bidirectional LSTM model with a 6-unit sigmoid output layer (multi-label classification).
+5. Evaluate accuracy and loss, and plot training curves.
+6. Score sample comments individually with `score_comment()`.
+7. Launch the Gradio interface to test new comments interactively.
 
 ## Model Architecture
 
@@ -66,34 +78,34 @@ The notebook uses a sequential neural network with:
 
 - Text embedding layer
 - Bidirectional LSTM layer
-- Dense hidden layer
-- Output layer for binary classification
+- Dense hidden layer (ReLU)
+- Output layer with 6 sigmoid units — one per toxicity category
+
+Loss function: binary crossentropy. Optimizer: Adam.
+
+## Gradio Demo
+
+The final notebook cell launches a Gradio web interface with three tabs:
+
+- **Single Comment** — enter one comment and get a status verdict plus a breakdown of scores across all six toxicity categories
+- **Batch Analysis** — paste multiple comments (one per line) and get a summary verdict for each
+- **Model Info** — architecture details, training configuration, and a score-interpretation reference table
+
+Run the last notebook cell to launch it locally (`demo.launch()`). No data is stored or transmitted externally — everything runs in-session.
 
 ## Notes
 
-- The notebook appears to be designed for experimentation and educational use.
-- Some cells are written for Google Colab-style file upload workflows.
-- For local execution, you may need to update the dataset loading section if your CSV path differs.
-
-## Example Run
-
-```python
-# Example for loading and checking the dataset
-import pandas as pd
-
-df = pd.read_csv('train1.csv')
-print(df.head())
-print(df['Label'].value_counts())
-```
+- The notebook is written for Google Colab-style file upload workflows; for local execution, update the dataset loading cell to point to your local `train.csv` path.
+- Class imbalance is significant — `severe_toxic`, `threat`, and `identity_hate` have far fewer examples than `toxic`, `obscene`, and `insult`. Accuracy alone can be misleading; consider per-class precision/recall if extending this project.
 
 ## Future Improvements
 
-- Add more balanced data for better generalization
-- Improve preprocessing with cleaning and stopword handling
+- Add class-weighting or resampling to address label imbalance
+- Improve preprocessing with text cleaning and stopword handling
 - Explore transformer-based models such as BERT
-- Add proper validation metrics and confusion matrix
-- Deploy as a web app or API
+- Add per-class validation metrics (precision, recall, F1, confusion matrices)
+- Deploy as a hosted web app or API
 
 ## License
 
-This project is intended for academic and learning purposes.
+This project is intended for academic and learning purposes. Dataset is released under CC0 by the original Kaggle uploader; underlying comment text is governed by Wikipedia's CC-BY-SA license.
