@@ -48,7 +48,7 @@ pip install jupyter
 
 1. Open the project folder.
 2. Start Jupyter Notebook or VS Code Notebook support.
-3. Open `FDS_PROJECT_CYBER_BULLYING_DETECTION.ipynb`.
+3. Open `CYBER_BULLYING_DETECTION.ipynb`.
 4. Run the cells in order.
 
 ## How It Works
