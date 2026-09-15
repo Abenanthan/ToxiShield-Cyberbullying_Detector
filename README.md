@@ -108,4 +108,4 @@ Run the last notebook cell to launch it locally (`demo.launch()`). No data is st
 
 ## License
 
-This project is intended for academic and learning purposes. Dataset is released under CC0 by the original Kaggle uploader; underlying comment text is governed by Wikipedia's CC-BY-SA license.c:\Users\Abenanthan P\Downloads\archive.zip
+This project is intended for academic and learning purposes. Dataset is released under CC0 by the original Kaggle uploader; underlying comment text is governed by Wikipedia's CC-BY-SA.
