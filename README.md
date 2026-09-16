@@ -118,21 +118,19 @@ The final notebook cell launches a Gradio web interface with three tabs:
 
 Run the last notebook cell to launch it locally (`demo.launch()`). No data is stored or transmitted externally — everything runs in-session.
 
-## Screenshots
-
-### Image 1
+### Interface
 
 ![ToxiShield screenshot 1](image1.png)
 
-### Image 2
+### Single Line Toxic Comment
 
 ![ToxiShield screenshot 2](image2.png)
 
-### Image 3
+### Single Line Comment
 
 ![ToxiShield screenshot 3](image3.png)
 
-### Image 4
+### Batch Analysis
 
 ![ToxiShield screenshot 4](image4.png)
 
