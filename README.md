@@ -74,14 +74,39 @@ pip install jupyter
 
 ## Model Architecture
 
-The notebook uses a sequential neural network with:
+### Architecture
 
-- Text embedding layer
-- Bidirectional LSTM layer
-- Dense hidden layer (ReLU)
-- Output layer with 6 sigmoid units — one per toxicity category
+- **Type:** Bidirectional LSTM Neural Network
+- **Embedding Dimension:** 32
+- **LSTM Units:** 32 (bidirectional)
+- **Dense Layer:** 128 units with ReLU
+- **Output Layer:** 6 units with sigmoid
 
-Loss function: binary crossentropy. Optimizer: Adam.
+### Training Configuration
+
+- **Vocabulary Size:** 20,000 tokens
+- **Max Sequence Length:** 1,800 tokens
+- **Optimizer:** Adam
+- **Loss Function:** Binary Crossentropy
+- **Test Accuracy:** 99.41%
+
+### Toxicity Categories (6 types)
+
+1. **Toxic** - General toxicity or rudeness
+2. **Severe Toxic** - Extremely toxic or hateful content
+3. **Obscene** - Profanity or vulgar language
+4. **Threat** - Threatening or intimidating language
+5. **Insult** - Insulting or degrading language
+6. **Identity Hate** - Hate speech targeting identity groups
+
+### Score Interpretation
+
+| Score Range | Status | Description |
+|---|---|---|
+| 0-20% | ✅ Clean | Content is appropriate and non-toxic |
+| 20-40% | ⚡ Potentially Problematic | May contain borderline content |
+| 40-70% | ⚠️ Moderately Toxic | Contains toxic elements |
+| 70-100% | 🚨 Highly Toxic | Severely toxic or harmful content |
 
 ## Gradio Demo
 
