@@ -25,8 +25,8 @@ It includes:
 
 ## Project Files
 
-- `ToxiShield_Toxicity_Detection.ipynb` — main notebook containing data exploration, model building, training, and the Gradio demo *(rename to match your actual notebook filename if different)*
-- `train.csv` — training dataset with comments and their toxicity labels (download from the [Kaggle dataset page](https://www.kaggle.com/datasets/julian3833/jigsaw-toxic-comment-classification-challenge) — not included in this repo due to size)
+- `CYBER_BULLYING_DETECTION.ipynb` — main notebook containing data exploration, model building, training, and the Gradio demo
+- `train1.csv` — training dataset with comments and their toxicity labels
 
 ## Dataset
 
@@ -38,7 +38,7 @@ Sourced from the Jigsaw Toxic Comment Classification Challenge, containing Wikip
 | `comment_text` | The raw comment text |
 | `toxic`, `severe_toxic`, `obscene`, `threat`, `insult`, `identity_hate` | Binary (0/1) labels — a comment may have multiple labels set |
 
-> **Note:** Only `train.csv` is used for training. `test.csv` and `test_labels.csv` are provided by Kaggle for competition scoring and are not required to run this notebook. See the [dataset page](https://www.kaggle.com/datasets/julian3833/jigsaw-toxic-comment-classification-challenge) for the full file list.
+> **Note:** Only the training data is used for training. See the [dataset page](https://www.kaggle.com/datasets/julian3833/jigsaw-toxic-comment-classification-challenge) for the full file list.
 
 ## Requirements
 
@@ -56,20 +56,20 @@ pip install jupyter
 
 ## Setup
 
-1. Download `train.csv` from the [Kaggle dataset page](https://www.kaggle.com/datasets/julian3833/jigsaw-toxic-comment-classification-challenge) and place it in the project folder (or use `kagglehub` to fetch it directly — see notebook Cell 1).
+1. Download the training dataset from the [Kaggle dataset page](https://www.kaggle.com/datasets/julian3833/jigsaw-toxic-comment-classification-challenge) and place it in the project folder.
 2. Open the project folder.
 3. Start Jupyter Notebook, VS Code, or Google Colab.
-4. Open `ToxiShield_Toxicity_Detection.ipynb`.
+4. Open `CYBER_BULLYING_DETECTION.ipynb`.
 5. Run the cells in order.
 
 ## How It Works
 
-1. Load the dataset from `train.csv`.
+1. Load the dataset from `train1.csv`.
 2. Explore the dataset — class distribution across all six toxicity categories.
 3. Transform comment text using `TextVectorization`.
-4. Train a Bidirectional LSTM model with a 6-unit sigmoid output layer (multi-label classification).
+4. Train a Bidirectional LSTM model with a 6-unit sigmoid output layer for multi-label classification.
 5. Evaluate accuracy and loss, and plot training curves.
-6. Score sample comments individually with `score_comment()`.
+6. Score sample comments individually.
 7. Launch the Gradio interface to test new comments interactively.
 
 ## Model Architecture
@@ -118,10 +118,28 @@ The final notebook cell launches a Gradio web interface with three tabs:
 
 Run the last notebook cell to launch it locally (`demo.launch()`). No data is stored or transmitted externally — everything runs in-session.
 
+## Screenshots
+
+### Image 1
+
+![ToxiShield screenshot 1](image1.png)
+
+### Image 2
+
+![ToxiShield screenshot 2](image2.png)
+
+### Image 3
+
+![ToxiShield screenshot 3](image3.png)
+
+### Image 4
+
+![ToxiShield screenshot 4](image4.png)
+
 ## Notes
 
-- The notebook is written for Google Colab-style file upload workflows; for local execution, update the dataset loading cell to point to your local `train.csv` path.
-- Class imbalance is significant — `severe_toxic`, `threat`, and `identity_hate` have far fewer examples than `toxic`, `obscene`, and `insult`. Accuracy alone can be misleading; consider per-class precision/recall if extending this project.
+- The notebook is written for Google Colab-style file upload workflows; for local execution, update the dataset loading cell to point to your local `train1.csv` path.
+- Class imbalance is significant — `severe_toxic`, `threat`, and `identity_hate` have far fewer examples than `toxic`, `obscene`, and `insult`. Accuracy alone can be misleading; consider per-class precision/recall when extending this project.
 
 ## Future Improvements
 
@@ -133,4 +151,4 @@ Run the last notebook cell to launch it locally (`demo.launch()`). No data is st
 
 ## License
 
-This project is intended for academic and learning purposes. Dataset is released under CC0 by the original Kaggle uploader; underlying comment text is governed by Wikipedia's CC-BY-SA.
+This project is intended for academic and learning purposes. The dataset is released under CC0 by the original Kaggle uploader; underlying comment text is governed by Wikipedia's CC-BY-SA.
